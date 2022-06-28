@@ -54,6 +54,14 @@ public class ContaService {
         return ContaInserida;
     }
     
+    public List<Conta> getTodasContas() {
+        return ContaDao.findAll();
+    }
+    
+    public Conta buscar(int id) {
+        return ContaDao.findById(id);
+    }
+    
     public Conta editar(String ContaRequest) throws ErroNegocioException {
         Conta ContaEditada = new Conta();
         ObjectMapper mapper = new ObjectMapper(); 
@@ -84,9 +92,7 @@ public class ContaService {
         
     }
     
-    public List<Conta> getTodasContas() {
-        return ContaDao.findAll();
-    }
+    
     
     public Conta excluir(String ContaRequest) throws ErroNegocioException {
         Conta ContaDeletada = new Conta();

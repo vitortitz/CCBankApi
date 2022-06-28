@@ -6,6 +6,7 @@ package br.com.unifor.ccbankapi.service;
 
 import br.com.unifor.ccbankapi.dao.PessoaDao;
 import br.com.unifor.ccbankapi.dao.PessoaDao;
+import br.com.unifor.ccbankapi.domain.Endereco;
 import br.com.unifor.ccbankapi.domain.Pessoa;
 import br.com.unifor.ccbankapi.domain.Pessoa;
 import br.com.unifor.ccbankapi.exception.ErroNegocioException;
@@ -43,6 +44,14 @@ public class PessoaService {
         }
         return PessoaDao.insert(Pessoa);
 
+    }
+    
+     public List<Pessoa> getTodasPessoas() {
+        return PessoaDao.findAll();
+    }
+    
+    public Pessoa buscar(int id) {
+        return PessoaDao.findById(id);
     }
 
     public Pessoa inserir(String PessoaJson) throws ErroNegocioException {

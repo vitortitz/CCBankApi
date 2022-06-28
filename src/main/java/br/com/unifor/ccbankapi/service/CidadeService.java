@@ -85,6 +85,11 @@ public class CidadeService {
         return cidadeDao.findAll();
     }
     
+    public Cidade buscar(int id) {
+        return cidadeDao.findById(id);
+    }
+    
+    
     public Cidade excluir(String cidadeRequest) throws ErroNegocioException {
         Cidade cidadeDeletada = new Cidade();
         ObjectMapper mapper = new ObjectMapper(); 

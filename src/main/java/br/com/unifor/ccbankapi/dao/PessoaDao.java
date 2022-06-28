@@ -1,5 +1,6 @@
 package br.com.unifor.ccbankapi.dao;
 
+import br.com.unifor.ccbankapi.domain.Conta;
 import br.com.unifor.ccbankapi.domain.Pessoa;
 import br.com.unifor.ccbankapi.util.HibernateUtil;
 import java.util.List;
@@ -14,7 +15,17 @@ public class PessoaDao {
     }
      
 
- 
+ public List<Pessoa> findAll() {
+        session.beginTransaction();
+        try {
+            List<Pessoa> Pessoa = session.createQuery("from Pessoa order by id").list();
+            session.getTransaction().commit();
+            return Pessoa;
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+            return null;
+        }
+    }
 
     public Pessoa findById(Integer id){
         session.beginTransaction();

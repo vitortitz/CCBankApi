@@ -5,6 +5,7 @@
 package br.com.unifor.ccbankapi.service;
 
 import br.com.unifor.ccbankapi.dao.EnderecoDao;
+import br.com.unifor.ccbankapi.domain.Conta;
 import br.com.unifor.ccbankapi.domain.Endereco;
 import br.com.unifor.ccbankapi.exception.ErroNegocioException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -40,6 +41,13 @@ public class EnderecoService {
 
                        
         return EnderecoDao.insert(Endereco);
+    }
+    public List<Endereco> getTodosEnderecos() {
+        return EnderecoDao.findAll();
+    }
+    
+    public Endereco buscar(int id) {
+        return EnderecoDao.findById(id);
     }
     
     public Endereco inserir(String EnderecoJson) throws ErroNegocioException {

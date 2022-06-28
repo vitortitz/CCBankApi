@@ -6,6 +6,7 @@ package br.com.unifor.ccbankapi.service;
 
 import br.com.unifor.ccbankapi.dao.UsuarioDao;
 import br.com.unifor.ccbankapi.dao.UsuarioDao;
+import br.com.unifor.ccbankapi.domain.Pessoa;
 import br.com.unifor.ccbankapi.domain.Usuario;
 import br.com.unifor.ccbankapi.domain.Usuario;
 import br.com.unifor.ccbankapi.exception.ErroNegocioException;
@@ -76,6 +77,14 @@ public class UsuarioService {
         
         return usuarioDao.update(Usuario);
         
+    }
+    
+    public List<Usuario> getTodosUsuarios() {
+        return usuarioDao.findAll();
+    }
+    
+    public Usuario buscar(int id) {
+        return usuarioDao.findById(id);
     }
     
     
