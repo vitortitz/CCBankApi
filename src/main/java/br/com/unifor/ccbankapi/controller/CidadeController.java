@@ -25,110 +25,97 @@ import javax.ws.rs.core.Response;
  */
 @Path("cidade")
 public class CidadeController {
-    
+
     private CidadeService cidadeService;
-    
+
     public CidadeController() {
         cidadeService = new CidadeService();
     }
-    
-    @GET
-    public Response ping(){
-        return Response
-                .ok("ping")
-                .build();
-    }
-    
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response inserir(String cidadeJson) {
         Response retorno = null;
         try {
             Cidade cidade = cidadeService.inserir(cidadeJson);
-            if (cidade == null) 
+            if (cidade == null)
                 retorno = Response.serverError().build();
-            if(cidade != null) {
-                ObjectMapper mapper = new ObjectMapper(); 
-                retorno =  Response.ok(mapper.writeValueAsBytes(cidade)).build();
+            if (cidade != null) {
+                ObjectMapper mapper = new ObjectMapper();
+                retorno = Response.ok(mapper.writeValueAsBytes(cidade)).build();
             }
-              
+
         } catch (ErroNegocioException e) {
             return Response
                     .status(e.getErroResponse().getStatus())
                     .entity(e.getErroResponse())
                     .build();
-        } catch (Exception ex) {            
+        } catch (Exception ex) {
             retorno = Response
                     .serverError()
-                    .entity(new ErroResponse("Erro ao inserir cidade. Motivo: " + ex.getMessage(), Response.Status.INTERNAL_SERVER_ERROR.getStatusCode()))
+                    .entity(new ErroResponse("Erro ao inserir cidade. Motivo: " + ex.getMessage(),
+                            Response.Status.INTERNAL_SERVER_ERROR.getStatusCode()))
                     .build();
         }
         return retorno;
     }
-     @PUT
-     @Consumes(MediaType.APPLICATION_JSON)
-     public Response atualizar(String cidadeRequest) throws JsonProcessingException {
-         Response retorno = null;
-         
-         try {
-             Cidade  cidade = cidadeService.editar(cidadeRequest);
-             
-             if (cidade == null) 
+
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response atualizar(String cidadeRequest) throws JsonProcessingException {
+        Response retorno = null;
+
+        try {
+            Cidade cidade = cidadeService.editar(cidadeRequest);
+
+            if (cidade == null)
                 retorno = Response.serverError().build();
-            if(cidade != null) {
-                ObjectMapper mapper = new ObjectMapper(); 
-                retorno =  Response.ok(mapper.writeValueAsBytes(cidade)).build();
+            if (cidade != null) {
+                ObjectMapper mapper = new ObjectMapper();
+                retorno = Response.ok(mapper.writeValueAsBytes(cidade)).build();
             }
         } catch (ErroNegocioException e) {
-              retorno = Response
-                      .status(e.getErroResponse().getStatus())
-                      .entity(e.getErroResponse())
-                      .build();
+            retorno = Response
+                    .status(e.getErroResponse().getStatus())
+                    .entity(e.getErroResponse())
+                    .build();
         }
-          return retorno;
-      }   
-     
-     
-     @DELETE
-     @Consumes(MediaType.APPLICATION_JSON)
-     public Response deletar(String cidadeRequest) throws JsonProcessingException{
-         Response retorno = null;
-         
-         try {
-             Cidade  cidade = cidadeService.excluir(cidadeRequest);
-             if (cidade == null) 
-                retorno = Response.serverError().build();
-            if(cidade != null) {
-                ObjectMapper mapper = new ObjectMapper(); 
-                retorno =  Response.ok(mapper.writeValueAsBytes(cidade)).build();
-            }
-        } catch (ErroNegocioException e) {
-              retorno = Response
-                      .status(e.getErroResponse().getStatus())
-                      .entity(e.getErroResponse())
-                      .build();
-        }
-          return retorno;
-}
-     @GET
-     @Produces(MediaType.APPLICATION_JSON)
-	public Response listar() throws JsonProcessingException {
-                Response retorno = null;
-		List<Cidade> cidades = cidadeService.getTodasCidades();
-                ObjectMapper mapper = new ObjectMapper(); 
-                retorno =  Response.ok(mapper.writeValueAsBytes(cidades)).build();
-		return retorno;
-	}
+        return retorno;
+    }
+    
+    @DELETE
+    @Path("{codigo}") // passa o codigo para o endereço
+    public Response deletar(@PathParam("codigo") int id) throws JsonProcessingException, ErroNegocioException { // Amarrando o parametro codigo
+                                                                                         // que o usuario digita, ao
+        Response retorno = null; // objeto codigo
+        Cidade cidade = cidadeService.excluir(id);
+        ObjectMapper mapper = new ObjectMapper();
+        retorno = Response.ok(mapper.writeValueAsBytes(cidade)).build();
+        return retorno;
+
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("{codigo}")// passa o codigo para o endereço
-    public Response buscar(@PathParam("codigo") int id) throws JsonProcessingException { // Amarrando o parametro codigo que o usuario digita, ao
-		Response retorno = null;												// objeto codigo
-		Cidade cidade = cidadeService.buscar(id);        
-		ObjectMapper mapper = new ObjectMapper(); 
-                retorno =  Response.ok(mapper.writeValueAsBytes(cidade)).build();
-		return retorno;
+    public Response listar() throws JsonProcessingException {
+        Response retorno = null;
+        List<Cidade> cidades = cidadeService.getTodasCidades();
+        ObjectMapper mapper = new ObjectMapper();
+        retorno = Response.ok(mapper.writeValueAsBytes(cidades)).build();
+        return retorno;
+    }
 
-	}
-     
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("{codigo}") // passa o codigo para o endereço
+    public Response buscar(@PathParam("codigo") int id) throws JsonProcessingException { // Amarrando o parametro codigo
+                                                                                         // que o usuario digita, ao
+        Response retorno = null; // objeto codigo
+        Cidade cidade = cidadeService.buscar(id);
+        ObjectMapper mapper = new ObjectMapper();
+        retorno = Response.ok(mapper.writeValueAsBytes(cidade)).build();
+        return retorno;
+
+    }
+
 }

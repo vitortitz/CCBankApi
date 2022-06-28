@@ -90,16 +90,9 @@ public class CidadeService {
     }
     
     
-    public Cidade excluir(String cidadeRequest) throws ErroNegocioException {
-        Cidade cidadeDeletada = new Cidade();
-        ObjectMapper mapper = new ObjectMapper(); 
-        try {
-           Cidade cidade = mapper.readValue(cidadeRequest, Cidade.class);
-           return cidadeDeletada = this.excluir(cidade);
-        } catch (JsonProcessingException ex) {
-           throw new ErroNegocioException("Erro ao deletar Cidade. Motivo: " + ex.getMessage(), ex, Response.Status.BAD_REQUEST);
-        }      
-
+    public Cidade excluir(int id) throws ErroNegocioException {
+        Cidade cidade =  cidadeDao.findById(id);   
+        return cidadeDao.delete(cidade);
     } 
     
      public Cidade excluir(Cidade cidade) throws ErroNegocioException {
