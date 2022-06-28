@@ -1,0 +1,14 @@
+br\com\unifor\ccbankapi\exception\ErroNegocioException.class
+br\com\unifor\ccbankapi\controller\CidadeController.class
+br\com\unifor\ccbankapi\dao\CidadeDao.class
+br\com\unifor\ccbankapi\domain\Pessoa.class
+br\com\unifor\ccbankapi\domain\Cidade.class
+br\com\unifor\ccbankapi\domain\Conta.class
+br\com\unifor\ccbankapi\domain\Usuario.class
+br\com\unifor\ccbankapi\domain\Endereco.class
+br\com\unifor\ccbankapi\domain\Historico.class
+br\com\unifor\ccbankapi\service\CidadeService.class
+br\com\unifor\ccbankapi\resources\JavaEE8Resource.class
+br\com\unifor\ccbankapi\domain\ErroResponse.class
+br\com\unifor\ccbankapi\util\HibernateUtil.class
+br\com\unifor\ccbankapi\JAXRSConfiguration.class
